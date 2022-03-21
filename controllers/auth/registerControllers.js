@@ -1,22 +1,16 @@
 import Joi from "joi";
-import { userInfo } from "os";
 import CustomErrorHandler from "../../services/CustomeErrorHandler";
-import { User } from "../../models";
-
+import { User,RefreshToken } from "../../models";
+import bcrypt from 'bcrypt';
+import JwtService from '../../services/JwtServices';
+import { REFRESH_SECRET } from "../../config";
 
 
 const registerController = {
 
     async register(req,res,next){
 
-         // CHECKLIST
-        // [ ] validate the request
-        // [ ] authorise the request
-        // [ ] check if user is in the database already
-        // [ ] prepare model
-        // [ ] store in database
-        // [ ] generate jwt token
-        // [ ] send response
+     
 
         // Validation
         const registerSchema = Joi.object({
@@ -39,7 +33,7 @@ const registerController = {
         //check if user is already exist in my database
         try{
 
-            const exist = await User.exits({email:req.body.email})
+            const exist = await User.exists({email:req.body.email})
             if(exist){
 
                 return next(CustomErrorHandler.alreadyExist("This email is already exist"))
@@ -53,7 +47,45 @@ const registerController = {
 
         }
 
-        res.json({msg:"Hello world"})
+        //Hash Password
+        const {name,email,password} = req.body
+        const hashedPassword = await bcrypt.hash(password,10)
+
+        //prepare the model
+
+        
+        
+        const user = new User({
+            name,
+            email,
+            password: hashedPassword
+        });
+        let access_token;
+        let refresh_token;
+        try{
+
+            const result = await user.save()
+
+            //Token
+            access_token = JwtService.sign({ _id: result._id, role: result.role });
+            refresh_token = JwtService.sign({ _id: result._id, role: result.role },'1y',REFRESH_SECRET);
+
+            //database whitelist
+            await RefreshToken.create({token:refresh_token})
+
+        }
+
+        catch(err){
+
+            return next(err);
+        }
+
+
+
+
+
+        // res.json({msg:"Hello world"})
+        res.json({ access_token,refresh_token});
 
 
     }

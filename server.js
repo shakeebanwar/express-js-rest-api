@@ -3,6 +3,7 @@ import { APP_PORT,DB_URL} from './config'
 import errorHandler from './middlewares/errorHandlers';
 import routes from './routes'
 import mongoose from 'mongoose';
+import path from 'path';
 
 
 // Database connection
@@ -19,9 +20,12 @@ db.once('open', () => {
 
 
 
+global.appRoot = path.resolve(__dirname)
 const app = express()
+app.use(express.urlencoded({extended:false})) // multipartform data
 app.use(express.json()) //user for json response enabled
 app.use('/api',routes);
+app.use('/uploads',express.static('uploads'))
 app.use(errorHandler)
 
 

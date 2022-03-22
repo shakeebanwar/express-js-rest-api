@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
+import { APP_URL } from '../config';
 
 
 const productSchema = new Schema(
@@ -10,10 +11,14 @@ const productSchema = new Schema(
         image: {
             type: String,
             required: true,
+            get: (image) => {
+                
+                return `${APP_URL}/${image}`;
+            },
             
         },
     },
-    { timestamps: true }
+    { timestamps: true , toJSON: { getters: true },id:false}
 );
 
 export default mongoose.model('Product', productSchema, 'products');

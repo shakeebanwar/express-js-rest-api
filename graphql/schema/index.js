@@ -1,6 +1,6 @@
 import { GraphQLSchema} from 'graphql'
 import RootQuery from './query/querySchema'
-import Mutation from '../schema/Mutation/getuser'
+import Mutation from './Mutation/combinemutation'
 
 
 

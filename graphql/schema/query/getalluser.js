@@ -1,7 +1,6 @@
 
 import { GraphQLInt, GraphQLNonNull, GraphQLList, GraphQLString } from 'graphql'
 import { UserType } from '../types/index';
-import userData from '../../../MOCK_DATA.json'
 import { Product } from '../../../models';
 
 

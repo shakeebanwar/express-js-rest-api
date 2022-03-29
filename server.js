@@ -36,6 +36,10 @@ app.use('/graphql', graphqlHTTP({
     schema: schema,
  
     graphiql: true,
+    customFormatErrorFn: err => {
+        console.log(err);
+        return { message: err.message, status: 404 }
+    }
   }));
 
 

@@ -4,6 +4,9 @@ import errorHandler from './middlewares/errorHandlers';
 import routes from './routes'
 import mongoose from 'mongoose';
 import path from 'path';
+import { graphqlHTTP } from 'express-graphql';
+import schema from './graphql/schema';
+
 
 
 // Database connection
@@ -27,6 +30,13 @@ app.use(express.json()) //user for json response enabled
 app.use('/api',routes);
 app.use('/uploads',express.static('uploads'))
 app.use(errorHandler)
+
+
+app.use('/graphql', graphqlHTTP({
+    schema: schema,
+ 
+    graphiql: true,
+  }));
 
 
 

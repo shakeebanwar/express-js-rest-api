@@ -1,5 +1,5 @@
 import { GraphQLSchema} from 'graphql'
-import RootQuery from '../schema/query/userquery'
+import RootQuery from './query/querySchema'
 import Mutation from '../schema/Mutation/getuser'
 
 

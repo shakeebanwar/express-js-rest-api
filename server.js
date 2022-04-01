@@ -40,7 +40,17 @@ app.use('/graphql',(req,res)=>{
     graphiql: true,
     customFormatErrorFn: (err) => {
         
-        return ({ message: err.originalError.message,status:err.originalError.status})
+        console.log(err)
+        if(err.originalError){
+
+
+            return ({ message: err.originalError.message,status:err.originalError.status})
+        }
+
+        else{
+
+            return({message:err.message})
+        }
     }
 
 

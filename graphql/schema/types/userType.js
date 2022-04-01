@@ -1,4 +1,5 @@
-import { GraphQLObjectType, GraphQLInt, GraphQLString } from 'graphql'
+import { GraphQLObjectType, GraphQLInt, GraphQLString, graphql, GraphQLBoolean } from 'graphql'
+import { boolean } from 'joi';
 
 
 
@@ -10,7 +11,8 @@ const UserType = new GraphQLObjectType({
     price: { type: GraphQLInt },
     size: { type: GraphQLString },
     image: { type: GraphQLString },
-    createdAt:{type:GraphQLString}
+    createdAt:{type:GraphQLString},
+    status:{type:GraphQLBoolean}
     
   }),
 });

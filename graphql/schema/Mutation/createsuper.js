@@ -6,7 +6,7 @@ import CustomErrorHandler from '../../../services/CustomeErrorHandler'
 
 
 
-const createUser = {
+const createUser = {  
   type: UserType,
   args: {
     name: { type: GraphQLString },
@@ -35,8 +35,8 @@ const createUser = {
         size,
         image
       })
-
-      return document;
+      const obj = { status:true, ...document._doc}
+      return obj;
 
     }
 

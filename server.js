@@ -32,15 +32,21 @@ app.use('/uploads',express.static('uploads'))
 app.use(errorHandler)
 
 
-app.use('/graphql', graphqlHTTP({
+app.use('/graphql',(req,res)=>{
+    
+    graphqlHTTP({
     schema: schema,
  
     graphiql: true,
-    customFormatErrorFn: err => {
-        console.log(err);
-        return { message: err.message, status: 404 }
+    customFormatErrorFn: (err) => {
+        
+        return ({ message: err.originalError.message,status:err.originalError.status})
     }
-  }));
+
+
+
+  })(req,res)
+});
 
 
 

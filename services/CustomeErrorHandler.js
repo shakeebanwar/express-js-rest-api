@@ -6,6 +6,7 @@ class CustomErrorHandler extends Error {
     }
 
     static alreadyExist(message) {
+       
         return new CustomErrorHandler(409, message);
     }
 

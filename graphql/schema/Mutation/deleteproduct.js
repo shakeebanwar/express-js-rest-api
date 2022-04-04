@@ -2,6 +2,8 @@ import { graphql } from 'graphql';
 import { UserType } from '../types';
 import { GraphQLString, GraphQLInt } from 'graphql'
 import { Product } from '../../../models';
+import auth from '../../../middlewares/auth'
+
 
 
 
@@ -14,6 +16,7 @@ const deleteproduct = {
   async resolve(parent, { id},req,res) {
 
     console.log("obj==>",req.headers.authorization)
+    
 
 
     const document = await Product.findOneAndRemove({ _id: id });

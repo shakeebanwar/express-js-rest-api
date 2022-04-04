@@ -12,7 +12,8 @@ const UserType = new GraphQLObjectType({
     size: { type: GraphQLString },
     image: { type: GraphQLString },
     createdAt:{type:GraphQLString},
-    status:{type:GraphQLBoolean}
+    status:{type:GraphQLBoolean},
+    message:{type:GraphQLString}
     
   }),
 });

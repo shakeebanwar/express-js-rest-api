@@ -1,11 +1,12 @@
 import {GraphQLObjectType} from 'graphql'
-import {createUser,updateProduct} from './index'
+import {createUser,updateProduct,deleteproduct} from './index'
 
 const Mutation = new GraphQLObjectType({
     name: "Mutation",
     fields: {
       createUser,
-      updateProduct
+      updateProduct,
+      deleteproduct
     },
   });
 

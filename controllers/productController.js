@@ -43,7 +43,7 @@ const productController = {
                 fs.unlink(`${appRoot}/${filePath}`,(err)=>{
 
                     if(err){
-                        return next(CustomErrorHandler.serverError(err.message));
+                        return next(Customndler.serverError(err.message));
 
                     }
 

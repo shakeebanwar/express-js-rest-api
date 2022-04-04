@@ -2,7 +2,6 @@ import { graphql } from 'graphql';
 import { UserType } from '../types';
 import { GraphQLString, GraphQLInt } from 'graphql'
 import { Product } from '../../../models';
-import auth from '../../../middlewares/auth'
 
 
 

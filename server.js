@@ -2,24 +2,13 @@ import express from 'express'
 import { APP_PORT,DB_URL} from './config'
 import errorHandler from './middlewares/errorHandlers';
 import routes from './routes'
-import mongoose from 'mongoose';
 import path from 'path';
 import { graphqlHTTP } from 'express-graphql';
 import schema from './graphql/schema';
+import databaseconnection from './db'
+import graphqlconfig from './graphql/schema/configuration';
 
 
-
-// Database connection
-mongoose.connect(DB_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  
-});
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', () => {
-    console.log('DB connected...');
-});
 
 
 
@@ -32,32 +21,5 @@ app.use('/uploads',express.static('uploads'))
 app.use(errorHandler)
 
 
-app.use('/graphql',(req,res)=>{
-    
-    graphqlHTTP({
-    schema: schema,
- 
-    graphiql: true,
-    customFormatErrorFn: (err) => {
-        
-        console.log(err)
-        if(err.originalError){
-
-
-            return ({ message: err.originalError.message,status:err.originalError.status})
-        }
-
-        else{
-
-            return({message:err.message})
-        }
-    }
-
-
-
-  })(req,res)
-});
-
-
-
+app.use('/graphql',(req,res)=>{graphqlconfig(req,res)})
 app.listen(APP_PORT,()=> console.log(`listening port ${APP_PORT}`))
